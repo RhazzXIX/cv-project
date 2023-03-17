@@ -1,3 +1,5 @@
+import "../styles/GeneralInfoForm.css";
+
 const GeneralInfoForm = (props) => {
   const { name, address, contactNum, email, gitHub, linkedIn } = props.infos;
   const {
@@ -10,12 +12,12 @@ const GeneralInfoForm = (props) => {
     editLinkedIn,
   } = props;
   return (
-    <form onSubmit={save}>
-      <label htmlFor="name">
+    <form className="genInfoForm" onSubmit={save}>
+      <label className="nameLabel" htmlFor="name">
         Full Name:
         <input type={"text"} id="name" value={name} onChange={editName} />
       </label>
-      <label htmlFor="address">
+      <label className="addressLabel" htmlFor="address">
         Address:
         <input
           type={"text"}
