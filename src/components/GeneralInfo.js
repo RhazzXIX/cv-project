@@ -1,5 +1,6 @@
 import { Component } from "react";
 import uniqid from "uniqid";
+import "../styles/GeneralInfo.css";
 
 class GeneralInfo extends Component {
   constructor(props) {
@@ -32,12 +33,16 @@ class GeneralInfo extends Component {
         <h1 id="name">{name}</h1>
         <h4 id="address">{address}</h4>
         <ul id="contacts">
-          {contactNum && <li>{contactNum}</li>}
+          {contactNum && <li>{contactNum} </li>}
           {email && <li>|| {email}</li>}
           {gitHub && <li>|| {gitHub}</li>}
           {linkedIn && <li>|| {linkedIn}</li>}
         </ul>
-        {this.state.isHovering && <button onClick={editInfos}>edit</button>}
+        {this.state.isHovering && (
+          <button id="editBtn" onClick={editInfos}>
+            edit
+          </button>
+        )}
       </div>
     );
   }
