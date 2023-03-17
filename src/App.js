@@ -9,7 +9,7 @@ class App extends Component {
     this.state = {
       editGenInfo: false,
       name: "Driven Person",
-      address: "Competence Kingdom",
+      address: "Competence Kingdom, Up-skilling World",
       contactNum: "195-555-0375",
       email: "example@email.com",
       gitHub: "github.com/user",
@@ -52,7 +52,7 @@ class App extends Component {
 
   handleChangeGitHUb = (e) => {
     this.setState({
-      github: e.target.value,
+      gitHub: e.target.value,
     });
   };
 
@@ -70,8 +70,9 @@ class App extends Component {
   };
 
   render() {
-    const button = <button onClick={this.editGeneralInfo}>Edit</button>;
-    let genInfo = <GeneralInfo infos={this.state} button={button} />;
+    let genInfo = (
+      <GeneralInfo infos={this.state} editInfos={this.editGeneralInfo} />
+    );
     if (this.state.editGenInfo)
       genInfo = (
         <GeneralInfoForm
@@ -87,7 +88,8 @@ class App extends Component {
       );
     return (
       <main>
-        <section>{genInfo}</section>
+        <section id="general-info">{genInfo}</section>
+        <section></section>
       </main>
     );
   }
