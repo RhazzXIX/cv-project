@@ -1,101 +1,49 @@
 import { Component } from "react";
-import Info from "./components/Info";
+import GeneralInfo from "./components/GeneralInfo";
+import GeneralInfoForm from "./components/GeneralInfoForm";
 import uniqid from "uniqid";
-
-class Element extends Component {
-  render() {
-    return <button></button>;
-  }
-}
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: {
-        text: "Driven Person",
-        edit: false,
-      },
+      editGenInfo: true,
+      name: "Driven Person",
       address: "Competence Kingdom",
-      addressEdit: {
-        text: "Competence Kingdom",
-        edit: false,
-      },
-      contact: {
-        text: "",
-        id: uniqid(),
-      },
-      contacts: [
-        {
-          text: "195-555-0375",
-          id: uniqid(),
-        },
-        {
-          text: "example@email.com",
-          id: uniqid(),
-        },
-        {
-          text: "github.com/user",
-          id: uniqid(),
-        },
-        {
-          text: "linkedin.com/user",
-          id: uniqid(),
-        },
-      ],
-      profile: `Always pursuing improvement, not resting in my Laurels`,
-      profileEdit: {
-        text: "",
-        edit: false,
-      },
+      contactNum:"195-555-0375",
+      email:"example@email.com",
+      gitHub:"github.com/user",
+      linkedIn:"linkedin.com/user",
     };
-    this.element = <button>test</button>;
   }
 
-  submitName = (e) => {
+  submitGeneralEdit = (e) => {
     e.preventDefault();
     e.stopPropagation();
     this.setState({
-      name: {
-        text: this.state.name.text,
-        edit: false,
-      },
+      editGenInfo: false,
     });
   };
 
-  handleName = (e) => {
+  handleChangeName = (e) => {
     e.stopPropagation();
     this.setState({
-      name: {
-        text: e.target.value,
-        edit: true,
-      },
+      editGenInfo: true,
+      name: e.target.value,
     });
   };
 
-  editName = (e) => {
+  editGeneralInfo = (e) => {
     e.stopPropagation();
     this.setState({
-      name: {
-        text: this.state.name.text,
-        edit: true,
-      },
+      editGenInfo: true,
     });
   };
 
   render() {
-    return (
-      <main>
-        <Info
-          infos={this.state}
-          method={{
-            edit: this.editName,
-            submit: this.submitName,
-            change: this.handleName,
-          }}
-        />
-      </main>
-    );
+    let genInfo = <GeneralInfo infos={this.state} />;
+    if (this.state.editGenInfo) genInfo = <GeneralInfoForm methods={"test"} />;
+    return <main>{genInfo}</main>;
   }
 }
 
