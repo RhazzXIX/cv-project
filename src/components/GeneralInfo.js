@@ -2,17 +2,22 @@ import { Component } from "react";
 import uniqid from "uniqid";
 
 class GeneralInfo extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
-    const { name, address, contacts } = this.props.infos;
+    const { name, address, contactNum, email, gitHub, linkedIn } =
+      this.props.infos;
+
     return (
       <section id="baseInfo">
-        <h1 id="name">{name.text}</h1>
-        <h4 id="address">{address.text}</h4>
+        <h1 id="name">{name}</h1>
+        <h4 id="address">{address}</h4>
         <ul id="contacts">
-          {contacts.map((contact, i) => {
-            if (i === 0) return <li key={uniqid()}>{contact.text} </li>;
-            return <li key={uniqid()}>|| {contact.text} </li>;
-          })}
+          <li>{contactNum}</li>
+          <li>{email}</li>
+          <li>{gitHub}</li>
+          <li>{linkedIn}</li>
         </ul>
       </section>
     );

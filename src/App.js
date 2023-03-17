@@ -7,13 +7,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editGenInfo: true,
+      editGenInfo: false,
       name: "Driven Person",
       address: "Competence Kingdom",
-      contactNum:"195-555-0375",
-      email:"example@email.com",
-      gitHub:"github.com/user",
-      linkedIn:"linkedin.com/user",
+      contactNum: "195-555-0375",
+      email: "example@email.com",
+      gitHub: "github.com/user",
+      linkedIn: "linkedin.com/user",
     };
   }
 
@@ -28,8 +28,37 @@ class App extends Component {
   handleChangeName = (e) => {
     e.stopPropagation();
     this.setState({
-      editGenInfo: true,
       name: e.target.value,
+    });
+  };
+
+  handleChangeAdd = (e) => {
+    this.setState({
+      address: e.target.value,
+    });
+  };
+
+  handleChangeNumber = (e) => {
+    this.setState({
+      contactNum: e.target.value,
+    });
+  };
+
+  handleChangeEmail = (e) => {
+    this.setState({
+      email: e.target.value,
+    });
+  };
+
+  handleChangeGitHUb = (e) => {
+    this.setState({
+      github: e.target.value,
+    });
+  };
+
+  handleChangeLinkedIn = (e) => {
+    this.setState({
+      linkedIn: e.target.value,
     });
   };
 
@@ -41,9 +70,26 @@ class App extends Component {
   };
 
   render() {
-    let genInfo = <GeneralInfo infos={this.state} />;
-    if (this.state.editGenInfo) genInfo = <GeneralInfoForm methods={"test"} />;
-    return <main>{genInfo}</main>;
+    const button = <button onClick={this.editGeneralInfo}>Edit</button>;
+    let genInfo = <GeneralInfo infos={this.state} button={button} />;
+    if (this.state.editGenInfo)
+      genInfo = (
+        <GeneralInfoForm
+          infos={this.state}
+          save={this.submitGeneralEdit}
+          editName={this.handleChangeName}
+          editAddress={this.handleChangeAdd}
+          editNumber={this.handleChangeNumber}
+          editEmail={this.handleChangeEmail}
+          editGitHub={this.handleChangeGitHUb}
+          editLinkedIn={this.handleChangeLinkedIn}
+        />
+      );
+    return (
+      <main>
+        <section>{genInfo}</section>
+      </main>
+    );
   }
 }
 
