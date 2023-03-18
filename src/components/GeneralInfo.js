@@ -24,6 +24,7 @@ class GeneralInfo extends Component {
     const { name, address, contactNum, email, gitHub, linkedIn } =
       this.props.infos;
     const editInfos = this.props.editInfos;
+    const mailRef = `mailto:${email}`;
     return (
       <div
         id="baseInfo"
@@ -34,9 +35,21 @@ class GeneralInfo extends Component {
         <h4 id="address">{address}</h4>
         <ul id="contacts">
           {contactNum && <li>{contactNum} </li>}
-          {email && <li>|| {email}</li>}
-          {gitHub && <li>|| {gitHub}</li>}
-          {linkedIn && <li>|| {linkedIn}</li>}
+          {email && (
+            <li>
+              || <a href={mailRef}>{email}</a>
+            </li>
+          )}
+          {gitHub && (
+            <li>
+              || <a href={gitHub}>{gitHub}</a>
+            </li>
+          )}
+          {linkedIn && (
+            <li>
+              || <a href={linkedIn}>{linkedIn}</a>
+            </li>
+          )}
         </ul>
         {this.state.isHovering && (
           <button id="editBtn" onClick={editInfos}>
