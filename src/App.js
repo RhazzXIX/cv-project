@@ -90,14 +90,12 @@ class App extends Component {
     return (
       <main>
         <section id="general-info">{genInfo}</section>
-        <section id="experience-info">
-          <ExpInfo />
-        </section>
+        <ExpInfo />
         <section id="project-info">
-          <h1 id="proj-head">PROJECT</h1>
+          <h3 id="proj-head">PROJECTS</h3>
         </section>
         <section id="techs-info">
-          <h1 id="techs-head">TECHNICAL SKILLS</h1>
+          <h3 id="techs-head">TECHNICAL SKILLS</h3>
         </section>
       </main>
     );
