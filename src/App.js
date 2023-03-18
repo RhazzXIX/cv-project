@@ -3,6 +3,7 @@ import GeneralInfo from "./components/GeneralInfo";
 import GeneralInfoForm from "./components/GeneralInfoForm";
 import ExpInfo from "./components/ExpInfo";
 import "./styles/App.css";
+import EducationInfo from "./components/EducationInfo";
 
 class App extends Component {
   constructor(props) {
@@ -90,6 +91,7 @@ class App extends Component {
     return (
       <main>
         <section id="general-info">{genInfo}</section>
+        <EducationInfo />
         <ExpInfo />
         <section id="project-info">
           <h3 id="proj-head">PROJECTS</h3>
