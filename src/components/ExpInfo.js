@@ -18,7 +18,7 @@ class ExpInfoDisplay extends Component {
               <p>{experience.workLocation}</p>
               <ul>
                 {experience.workSummary.map((description) => {
-                  return <li key={description.id}>{description}</li>;
+                  return <li key={description.id}>{description.text}</li>;
                 })}
               </ul>
             </li>
@@ -41,26 +41,44 @@ class ExpInfo extends Component {
           companyName: "Excelsior",
           workLocation: "Competence Kingdom",
           workSummary: [
-            "Developing Apps that makes an impact",
-            "Teaching and developing juniors to be a better developer",
-            "Making sure the applications are of great quality",
+            {
+              text: "Developing Apps that makes an impact",
+              id: uniqid(),
+            },
+            {
+              text: "Teaching and developing juniors to be a better developer",
+              id: uniqid(),
+            },
+            {
+              text: "Making sure the applications are of great quality",
+              id: uniqid(),
+            },
           ],
-          workDescription: "",
           experienceID: uniqid(),
         },
       ],
-      experience: {
-        position: "",
-        starDate: "",
-        endDate: "",
-        companyName: "",
-        workLocation: "",
-        workSummary: [],
-        workDescription: "",
-        experienceID: uniqid(),
+      position: "",
+      starDate: "",
+      endDate: "",
+      companyName: "",
+      workLocation: "",
+      workSummary: [],
+      workDescription1: {
+        text: "",
+        id: uniqid(),
       },
+      workDescription2: {
+        text: "",
+        id: uniqid(),
+      },
+      workDescription3: {
+        text: "",
+        id: uniqid(),
+      },
+      experienceID: uniqid(),
     };
   }
+
   render() {
     return (
       <div>
