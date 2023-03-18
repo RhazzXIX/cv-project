@@ -10,9 +10,9 @@ class ExpInfoDisplay extends Component {
         {experiences.map((experience) => {
           return (
             <li key={experience.experienceID}>
-              <h2 className="position">{experience.position}</h2>
+              <h2 className="title">{experience.title}</h2>
               <p>
-                {experience.starDate} ~ {experience.endDate}
+                {experience.startDate} ~ {experience.endDate}
               </p>
               <p>{experience.companyName}</p>
               <p>{experience.workLocation}</p>
@@ -31,15 +31,32 @@ class ExpInfoDisplay extends Component {
 
 class ExpInfoForm extends Component {
   render() {
+    const {
+      addTitle,
+      addStartDate,
+      addEndDate,
+      addCompany,
+      addWorkLoc,
+      addWorkDesc1,
+      addWorkDesc2,
+      addWorkDesc3,
+      saveInfo,
+      cancel,
+    } = this.props;
     return (
-      <form>
+      <form onSubmit={saveInfo}>
         <label htmlFor="workTitle">
           Title:
-          <input id="workTitle" type={"text"} />
+          <input id="workTitle" type={"text"} onChange={addTitle} />
         </label>
         <label htmlFor="startDate">
           Start date:
-          <input id="startDate" type={"text"} placeholder="Month & Year" />
+          <input
+            id="startDate"
+            type={"text"}
+            placeholder="Month & Year"
+            onChange={addStartDate}
+          />
         </label>
         <label htmlFor="endDate">
           End date:
@@ -47,30 +64,33 @@ class ExpInfoForm extends Component {
             id="endDate"
             type={"text"}
             placeholder="Month & Year || Present if still working"
+            onChange={addEndDate}
           />
         </label>
         <label htmlFor="companyName">
           Company name:
-          <input id="companyName" type={"text"} />
+          <input id="companyName" type={"text"} onChange={addCompany} />
         </label>
         <label htmlFor="workLoc">
           Work location:
-          <input id="workLoc" type={"text"} />
+          <input id="workLoc" type={"text"} onChange={addWorkLoc} />
         </label>
         <label htmlFor="desc1">
           Work description:
-          <input id="desk1" type={"text"} />
+          <input id="desk1" type={"text"} onChange={addWorkDesc1} />
         </label>
         <label htmlFor="desc2">
           Additional work description:
-          <input id="desc2" type={"text"} />
+          <input id="desc2" type={"text"} onChange={addWorkDesc2} />
         </label>
         <label htmlFor="desc3">
           Additional work description:
-          <input id="desc3" type={"text"} />
+          <input id="desc3" type={"text"} onChange={addWorkDesc3} />
         </label>
         <button type="submit">Save</button>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={cancel}>
+          Cancel
+        </button>
       </form>
     );
   }
@@ -80,10 +100,11 @@ class ExpInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      addInfo: false,
       experiences: [
         {
-          position: "Undergraduate Research Assistant",
-          starDate: "June 2022",
+          title: "Undergraduate Research Assistant",
+          startDate: "June 2022",
           endDate: "Present",
           companyName: "Excelsior",
           workLocation: "Competence Kingdom",
@@ -104,35 +125,141 @@ class ExpInfo extends Component {
           experienceID: uniqid(),
         },
       ],
-      position: "",
-      starDate: "",
+      title: "",
+      startDate: "",
       endDate: "",
       companyName: "",
       workLocation: "",
-      workSummary: [],
       workDescription1: {
         text: "",
-        id: uniqid(),
+        key: uniqid(),
       },
       workDescription2: {
         text: "",
-        id: uniqid(),
+        key: uniqid(),
       },
       workDescription3: {
         text: "",
-        id: uniqid(),
+        key: uniqid(),
       },
       experienceID: uniqid(),
     };
   }
 
+  handleTitleChange = (e) => {
+    this.setState({
+      title: e.target.value,
+    });
+  };
+
+  handleStartDateChange = (e) => this.setState({ startDate: e.target.value });
+
+  handleEndDateChange = (e) => this.setState({ endDate: e.target.value });
+
+  handleCompanyNameChange = (e) =>
+    this.setState({ companyName: e.target.value });
+
+  handleWorkLocationChange = (e) =>
+    this.setState({ workLocation: e.target.value });
+
+  handleWorkDescription1Change = (e) =>
+    this.setState({
+      workDescription1: {
+        text: e.target.value,
+        id: uniqid(),
+      },
+    });
+
+  handleWorkDescription2Change = (e) =>
+    this.setState({
+      workDescription2: {
+        text: e.target.value,
+        id: uniqid(),
+      },
+    });
+
+  handleWorkDescription3Change = (e) =>
+    this.setState({
+      workDescription3: {
+        text: e.target.value,
+        id: uniqid(),
+      },
+    });
+
+  handleSaveExperience = (e) => {
+    e.preventDefault();
+    const experience = {
+      title: this.state.title,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      companyName: this.state.companyName,
+      workLocation: this.state.workLocation,
+      workSummary: [
+        this.state.workDescription1,
+        this.state.workDescription2,
+        this.state.workDescription3,
+      ],
+      experienceID: this.state.experienceID,
+    };
+
+    this.setState({
+      experiences: this.state.experiences.concat(experience),
+      addInfo: false,
+      title: "",
+      startDate: "",
+      endDate: "",
+      companyName: "",
+      workLocation: "",
+      workDescription1: {
+        text: "",
+        key: uniqid(),
+      },
+      workDescription2: {
+        text: "",
+        key: uniqid(),
+      },
+      workDescription3: {
+        text: "",
+        key: uniqid(),
+      },
+      experienceID: uniqid(),
+    });
+  };
+
+  addExpInfo = (e) => {
+    this.setState({
+      addInfo: true,
+    });
+  };
+
+  cancelEdit = (e) => {
+    this.setState({
+      addInfo: false,
+    });
+  };
+
   render() {
     return (
       <section id="experience-info">
         <h3 id="exp-head">EXPERIENCE</h3>
-        <button id="testBtn">+</button>
+        <button id="testBtn" onClick={this.addExpInfo}>
+          +
+        </button>
         <ExpInfoDisplay experiences={this.state.experiences} />
-        <ExpInfoForm />
+        {this.state.addInfo && (
+          <ExpInfoForm
+            addTitle={this.handleTitleChange}
+            addStartDate={this.handleStartDateChange}
+            addEndDate={this.handleEndDateChange}
+            addCompany={this.handleCompanyNameChange}
+            addWorkLoc={this.handleWorkLocationChange}
+            addWorkDesc1={this.handleWorkDescription1Change}
+            addWorkDesc2={this.handleWorkDescription2Change}
+            addWorkDesc3={this.handleWorkDescription3Change}
+            saveInfo={this.handleSaveExperience}
+            cancel={this.cancelEdit}
+          />
+        )}
       </section>
     );
   }
