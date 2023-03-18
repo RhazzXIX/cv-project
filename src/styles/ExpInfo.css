@@ -1,11 +1,3 @@
-button#testBtn {
-  position: absolute;
-  top: 6px;
-  right: 20px;
-  padding: 4px 8px;
-  border-radius: 100%;
-}
-
 ul.experienceList {
   list-style: none;
 }

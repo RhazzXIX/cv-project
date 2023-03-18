@@ -33,3 +33,11 @@ button {
 button:hover {
   background-color: rgb(255, 255, 255);
 }
+
+button.addInfosBtn {
+  position: absolute;
+  top: 6px;
+  right: 20px;
+  padding: 4px 8px;
+  border-radius: 100%;
+}

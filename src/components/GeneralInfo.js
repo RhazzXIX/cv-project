@@ -53,7 +53,7 @@ class GeneralInfo extends Component {
         </ul>
         {this.state.isHovering && (
           <button id="editBtn" onClick={editInfos}>
-            edit
+            Edit
           </button>
         )}
       </div>

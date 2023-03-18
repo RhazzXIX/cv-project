@@ -299,7 +299,7 @@ class ExpInfo extends Component {
       >
         <h3 id="exp-head">EXPERIENCE</h3>
         {this.state.isHovering && (
-          <button id="testBtn" onClick={this.addExpInfo}>
+          <button className="addInfosBtn" onClick={this.addExpInfo}>
             +
           </button>
         )}
