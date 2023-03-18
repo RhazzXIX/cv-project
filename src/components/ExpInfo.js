@@ -3,13 +3,37 @@ import "../styles/ExpInfo.css";
 import uniqid from "uniqid";
 
 class ExpInfoDisplay extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isHovering: false,
+    };
+  }
+
+  handleHover = (e) => {
+    this.setState({
+      isHovering: true,
+    });
+  };
+
+  handleMouseOut = (e) => {
+    this.setState({
+      isHovering: false,
+    });
+  };
+
   render() {
     const experiences = this.props.experiences;
+    const deleteExp = this.props.deleteExp;
     return (
       <ul>
         {experiences.map((experience) => {
           return (
-            <li key={experience.experienceID}>
+            <li
+              key={experience.experienceID}
+              onMouseOver={this.handleHover}
+              onMouseOut={this.handleMouseOut}
+            >
               <h2 className="title">{experience.title}</h2>
               <p>
                 {experience.startDate} ~ {experience.endDate}
@@ -21,6 +45,11 @@ class ExpInfoDisplay extends Component {
                   return <li key={description.id}>{description.text}</li>;
                 })}
               </ul>
+              {this.state.isHovering && (
+                <button onClick={deleteExp} data-exp={experience.experienceID}>
+                  Del
+                </button>
+              )}
             </li>
           );
         })}
@@ -100,6 +129,7 @@ class ExpInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isHovering: false,
       addInfo: false,
       experiences: [
         {
@@ -238,14 +268,44 @@ class ExpInfo extends Component {
     });
   };
 
+  deleteExperience = (e) => {
+    console.log(this.state.experiences);
+    this.setState({
+      experiences: this.state.experiences.filter((experience) => {
+        return experience.experienceID !== e.target.dataset.exp;
+      }),
+    });
+  };
+
+  handleHover = (e) => {
+    this.setState({
+      isHovering: true,
+    });
+  };
+
+  handleMouseOut = (e) => {
+    this.setState({
+      isHovering: false,
+    });
+  };
+
   render() {
     return (
-      <section id="experience-info">
+      <section
+        id="experience-info"
+        onMouseOver={this.handleHover}
+        onMouseOut={this.handleMouseOut}
+      >
         <h3 id="exp-head">EXPERIENCE</h3>
-        <button id="testBtn" onClick={this.addExpInfo}>
-          +
-        </button>
-        <ExpInfoDisplay experiences={this.state.experiences} />
+        {this.state.isHovering && (
+          <button id="testBtn" onClick={this.addExpInfo}>
+            +
+          </button>
+        )}
+        <ExpInfoDisplay
+          experiences={this.state.experiences}
+          deleteExp={this.deleteExperience}
+        />
         {this.state.addInfo && (
           <ExpInfoForm
             addTitle={this.handleTitleChange}
