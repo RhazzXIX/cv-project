@@ -74,7 +74,7 @@ class ExpInfoForm extends Component {
       cancel,
     } = this.props;
     return (
-      <form onSubmit={saveInfo}>
+      <form id="expForm" onSubmit={saveInfo}>
         <label htmlFor="workTitle">
           Title:
           <input id="workTitle" type={"text"} onChange={addTitle} />
