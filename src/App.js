@@ -1,7 +1,8 @@
 import { Component } from "react";
 import GeneralInfo from "./components/GeneralInfo";
 import GeneralInfoForm from "./components/GeneralInfoForm";
-import uniqid from "uniqid";
+import ExpInfo from "./components/ExpInfo";
+import "./styles/App.css";
 
 class App extends Component {
   constructor(props) {
@@ -89,7 +90,15 @@ class App extends Component {
     return (
       <main>
         <section id="general-info">{genInfo}</section>
-        <section></section>
+        <section id="experience-info">
+          <ExpInfo />
+        </section>
+        <section id="project-info">
+          <h1 id="proj-head">PROJECT</h1>
+        </section>
+        <section id="techs-info">
+          <h1 id="techs-head">TECHNICAL SKILLS</h1>
+        </section>
       </main>
     );
   }
