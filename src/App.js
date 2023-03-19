@@ -5,6 +5,7 @@ import ExpInfo from "./components/ExpInfo";
 import "./styles/App.css";
 import EducationInfo from "./components/EducationInfo";
 import ProjectInfo from "./components/ProjectInfo";
+import TechSkillsInfo from "./components/TechSkillsInfo";
 
 class App extends Component {
   constructor(props) {
@@ -95,9 +96,7 @@ class App extends Component {
         <EducationInfo />
         <ExpInfo />
         <ProjectInfo />
-        <section id="techs-info">
-          <h3 id="techs-head">TECHNICAL SKILLS</h3>
-        </section>
+        <TechSkillsInfo />
       </main>
     );
   }
