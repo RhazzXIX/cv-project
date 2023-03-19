@@ -6,7 +6,7 @@ class DisplayProject extends Component {
     super(props);
     this.state = {
       isHovering: false,
-    }
+    };
   }
 
   handleHover = (e) => {
@@ -22,44 +22,83 @@ class DisplayProject extends Component {
   };
 
   render() {
-    const projects = this.props.infos
-    return(
+    const projects = this.props.infos;
+    return (
       <ul className="infoList">
-        {
-          projects.map(project => {
-            return(
-              <li 
-                className="project infoListItem"
-                key={project.id} 
-              >
-                <h2>{project.name}</h2>
-                <p>{project.toolsUsed}</p>
-                <p>{project.startDate} ~ {project.endDate}</p>
-                <ul>
-                  {
-                    project.summaries.map(description => {
-                      return(
-                        <li key={description.id}>{description.text}</li>
-                      )
-                    })
-                  }
-                </ul>
-              </li>
-            )
-          })
-        }
+        {projects.map((project) => {
+          return (
+            <li className="project infoListItem" key={project.id}>
+              <h2>{project.name}</h2>
+              <p>{project.toolsUsed}</p>
+              <p>
+                {project.startDate} ~ {project.endDate}
+              </p>
+              <ul>
+                {project.summaries.map((description) => {
+                  return <li key={description.id}>{description.text}</li>;
+                })}
+              </ul>
+            </li>
+          );
+        })}
       </ul>
-    )
+    );
   }
 }
 
+class ProjectForm extends Component {
+  render() {
+    return (
+      <form className="projForm">
+        <label htmlFor="projectName">
+          Project Name:
+          <input id="projectName" type={"text"} />
+        </label>
+        <label htmlFor="tools">
+          Tools Used:
+          <input id="tools" type={"text"} placeholder="React.js, uniqid " />
+        </label>
+        <label htmlFor="projStart">
+          Start Date:
+          <input id="projStart" type={"text"} placeholder="MONTH & YEAR" />
+        </label>
+        <label htmlFor="projEnd">
+          Finish Date:
+          <input
+            id="projEnd"
+            type={"text"}
+            placeholder={`"Present" if not finished`}
+          />
+        </label>
+        <label htmlFor="projDesc1">
+          Project description:
+          <input id="projDesc1" type={"text"} />
+        </label>
+        <label htmlFor="projDesc2">
+          Additional project description:
+          <input id="projDesc2" type={"text"} />
+        </label>
+        <label htmlFor="projDesc3">
+          Additional project description:
+          <input id="projDesc3" type={"text"} />
+        </label>
+        <label htmlFor="projDesc4">
+          Additional project description:
+          <input id="projDesc4" type={"text"} />
+        </label>
+        <button type="submit">Save</button>
+        <button type="button">Cancel</button>
+      </form>
+    );
+  }
+}
 
 class ProjectInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isHovering: false,
-      addEduProjInfo: false,
+      addProjInfo: true,
       projects: [
         {
           name: "Gitlytics",
@@ -84,7 +123,7 @@ class ProjectInfo extends Component {
               id: uniqid(),
             },
           ],
-          id: uniqid()
+          id: uniqid(),
         },
       ],
       name: "",
@@ -107,7 +146,7 @@ class ProjectInfo extends Component {
         text: "",
         id: uniqid(),
       },
-      id: uniqid()
+      id: uniqid(),
     };
   }
 
@@ -137,6 +176,7 @@ class ProjectInfo extends Component {
           </button>
         )}
         <DisplayProject infos={this.state.projects} />
+        {this.state.addProjInfo && <ProjectForm />}
       </section>
     );
   }
