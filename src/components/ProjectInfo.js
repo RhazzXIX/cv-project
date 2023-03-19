@@ -1,5 +1,6 @@
 import { Component } from "react";
 import uniqid from "uniqid";
+import "../styles/ProjectInfo.css";
 
 class DisplayProject extends Component {
   constructor(props) {
