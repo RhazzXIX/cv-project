@@ -1,5 +1,6 @@
 import { Component } from "react";
 import uniqid from "uniqid";
+import "../styles/TechSkillsInfo.css";
 
 const SkillsForm = (props) => {
   console.log(props);
@@ -56,10 +57,11 @@ class DisplaySkills extends Component {
     const techs = this.props.techs;
     const delSkill = this.props.delSkill;
     return (
-      <ul>
+      <ul className="infoList">
         {techs.map((tech) => {
           return (
             <li
+              className="skills infoListItem"
               key={tech.id}
               onMouseOver={this.handleHover}
               onMouseOut={this.handleMouseOut}

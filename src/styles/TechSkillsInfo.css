@@ -1,0 +1,31 @@
+li.skills {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+}
+
+li.skills h2 {
+  margin-right: 8px;
+}
+
+form.skillForm {
+  display: grid;
+  grid-template-rows: repeat(3, 38px);
+  grid-template-columns: 1fr 54px 54px;
+}
+
+form.skillForm label {
+  grid-column: 1 / -1;
+}
+
+form.skillForm button {
+  grid-row: 3 / 4;
+}
+
+form.skillForm button[type="submit"] {
+  grid-column: 2 / 3;
+}
+
+form.skillForm button[type="button"] {
+  grid-column: 3 / 4;
+}
