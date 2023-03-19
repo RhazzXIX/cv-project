@@ -1,15 +1,62 @@
 import { Component } from "react";
 import uniqid from "uniqid";
 
+class DisplayEducationInfos extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isHovering: false,
+    };
+  }
+
+  handleHover = (e) => {
+    this.setState({
+      isHovering: true,
+    });
+  };
+
+  handleMouseOut = (e) => {
+    this.setState({
+      isHovering: false,
+    });
+  };
+
+  render() {
+    const EducationInfos = this.props.infos;
+
+    return (
+      <ul>
+        {EducationInfos.map((edu) => {
+          return (
+            <li
+              key={edu.id}
+              onMouseOver={this.handleHover}
+              onMouseOut={this.handleMouseOut}
+            >
+              <h2>{edu.schoolName}</h2>
+              <p>{edu.location}</p>
+              <p>{edu.course}</p>
+              <p>
+                {edu.startDate} ~ {edu.endDate}
+              </p>
+              {this.state.isHovering && <button data-edu={edu.id}>Del</button>}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
+}
+
 class EducationInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isHovering: true,
+      isHovering: false,
       addEduInfo: false,
       educationInfos: [
         {
-          name: "Southwestern University",
+          schoolName: "Southwestern University",
           location: "Georgetown, TX",
           course: "Bachelor of Arts in Computer Science, Minor in Business",
           startDate: "Aug. 2018",
@@ -17,7 +64,7 @@ class EducationInfo extends Component {
           id: uniqid(),
         },
       ],
-      name: "",
+      schoolName: "",
       location: "",
       course: "",
       startDate: "",
@@ -45,12 +92,13 @@ class EducationInfo extends Component {
         onMouseOver={this.handleHover}
         onMouseOut={this.handleMouseOut}
       >
-        <h3 id="edu-head">Education</h3>
+        <h3 id="edu-head">EDUCATION</h3>
         {this.state.isHovering && (
           <button className="addInfosBtn" onClick={this.addEduInfo}>
             +
           </button>
         )}
+        <DisplayEducationInfos infos={this.state.educationInfos} />
       </section>
     );
   }
