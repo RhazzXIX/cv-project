@@ -162,6 +162,116 @@ class ProjectInfo extends Component {
     });
   };
 
+  handleProjectNameChange = (e) => {
+    this.state({
+      name: e.target.value,
+    });
+  };
+
+  handleToolsChange = (e) => {
+    this.state({
+      toolsUsed: e.target.value,
+    });
+  };
+
+  handleStartDateChange = (e) => {
+    this.state({
+      startDate: e.target.value,
+    });
+  };
+
+  handleEndDateChange = (e) => {
+    this.state({
+      endDate: e.target.value,
+    });
+  };
+
+  handleDesc1Change = (e) => {
+    this.state({
+      projDescription1: e.target.value,
+    });
+  };
+
+  handleDesc2Change = (e) => {
+    this.state({
+      projDescription2: e.target.value,
+    });
+  };
+
+  handleDesc3Change = (e) => {
+    this.state({
+      projDescription3: e.target.value,
+    });
+  };
+
+  handleDesc4Change = (e) => {
+    this.state({
+      projDescription4: e.target.value,
+    });
+  };
+
+  addProjInfo = (e) => {
+    this.state({
+      addProjInfo: true,
+    });
+  };
+
+  cancelAddingInfo = (e) => {
+    this.state({
+      addProjInfo: false,
+    });
+  };
+
+  saveProject = (e) => {
+    e.preventDefault();
+    const project = {
+      name: this.state.name,
+      toolsUsed: this.state.toolsUsed,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      summaries: [
+        this.state.projDescription1,
+        this.state.projDescription2,
+        this.state.projDescription3,
+        this.state.projDescription4,
+      ],
+      id: this.state.id,
+    };
+    this.setState({
+      addProjInfo: false,
+      projects: this.state.projects.concat(project),
+      name: "",
+      toolsUsed: "",
+      startDate: "",
+      endDate: "",
+      projDescription1: {
+        text: "",
+        id: uniqid(),
+      },
+      projDescription2: {
+        text: "",
+        id: uniqid(),
+      },
+      projDescription3: {
+        text: "",
+        id: uniqid(),
+      },
+      projDescription4: {
+        text: "",
+        id: uniqid(),
+      },
+      id: uniqid(),
+    });
+  };
+
+  projectDelete = (e) => {
+    this.setState({
+      projects: this.state.projects.filter((project) => {
+        return project.id !== e.target.dataset.proj;
+      }),
+    });
+  };
+
   render() {
     return (
       <section
