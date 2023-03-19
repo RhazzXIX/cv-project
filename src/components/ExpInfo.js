@@ -79,19 +79,19 @@ class ExpInfoForm extends Component {
           Title:
           <input id="workTitle" type={"text"} onChange={addTitle} />
         </label>
-        <label htmlFor="startDate">
+        <label htmlFor="expStartDate">
           Start date:
           <input
-            id="startDate"
+            id="expStartDate"
             type={"text"}
             placeholder="Month & Year"
             onChange={addStartDate}
           />
         </label>
-        <label htmlFor="endDate">
+        <label htmlFor="expEndDate">
           End date:
           <input
-            id="endDate"
+            id="expEndDate"
             type={"text"}
             placeholder="Month & Year || Present if still working"
             onChange={addEndDate}
@@ -270,7 +270,6 @@ class ExpInfo extends Component {
   };
 
   deleteExperience = (e) => {
-    console.log(this.state.experiences);
     this.setState({
       experiences: this.state.experiences.filter((experience) => {
         return experience.experienceID !== e.target.dataset.exp;

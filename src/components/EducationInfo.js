@@ -55,7 +55,6 @@ class DisplayEducationInfos extends Component {
 
 class EducationForm extends Component {
   render() {
-    console.log(this.props);
     const {
       addSchool,
       addLocation,
