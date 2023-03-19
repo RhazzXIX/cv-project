@@ -1,10 +1,28 @@
 import { Component } from "react";
+import uniqid from "uniqid";
 
 class EducationInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isHovering: true,
+      addEduInfo: false,
+      educationInfos: [
+        {
+          name: "Southwestern University",
+          location: "Georgetown, TX",
+          course: "Bachelor of Arts in Computer Science, Minor in Business",
+          startDate: "Aug. 2018",
+          endDate: "May 2021",
+          id: uniqid(),
+        },
+      ],
+      name: "",
+      location: "",
+      course: "",
+      startDate: "",
+      endDate: "",
+      id: uniqid(),
     };
   }
 
