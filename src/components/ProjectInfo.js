@@ -1,6 +1,59 @@
 import { Component } from "react";
 import uniqid from "uniqid";
 
+class DisplayProject extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isHovering: false,
+    }
+  }
+
+  handleHover = (e) => {
+    this.setState({
+      isHovering: true,
+    });
+  };
+
+  handleMouseOut = (e) => {
+    this.setState({
+      isHovering: false,
+    });
+  };
+
+  render() {
+    const projects = this.props.infos
+    return(
+      <ul className="infoList">
+        {
+          projects.map(project => {
+            return(
+              <li 
+                className="project infoListItem"
+                key={project.id} 
+              >
+                <h2>{project.name}</h2>
+                <p>{project.toolsUsed}</p>
+                <p>{project.startDate} ~ {project.endDate}</p>
+                <ul>
+                  {
+                    project.summaries.map(description => {
+                      return(
+                        <li key={description.id}>{description.text}</li>
+                      )
+                    })
+                  }
+                </ul>
+              </li>
+            )
+          })
+        }
+      </ul>
+    )
+  }
+}
+
+
 class ProjectInfo extends Component {
   constructor(props) {
     super(props);
@@ -9,11 +62,11 @@ class ProjectInfo extends Component {
       addEduProjInfo: false,
       projects: [
         {
-          projectName: "Gitlytics",
+          name: "Gitlytics",
           toolsUsed: "Python, Flask, React, PostgreSQL, Docker",
           startDate: "June 2020",
           endDate: "Present",
-          projectDescriptions: [
+          summaries: [
             {
               text: "Developed a full-stack web application using with Flask serving a REST API with React as the frontend",
               id: uniqid(),
@@ -31,9 +84,10 @@ class ProjectInfo extends Component {
               id: uniqid(),
             },
           ],
+          id: uniqid()
         },
       ],
-      projectName: "",
+      name: "",
       toolsUsed: "",
       startDate: "",
       endDate: "",
@@ -53,6 +107,7 @@ class ProjectInfo extends Component {
         text: "",
         id: uniqid(),
       },
+      id: uniqid()
     };
   }
 
@@ -81,6 +136,7 @@ class ProjectInfo extends Component {
             +
           </button>
         )}
+        <DisplayProject infos={this.state.projects} />
       </section>
     );
   }
