@@ -48,6 +48,37 @@ class DisplayEducationInfos extends Component {
   }
 }
 
+class EducationForm extends Component {
+  render() {
+    return (
+      <form>
+        <label htmlFor="schoolName">
+          School Name:
+          <input type={"text"} id="schoolName" />
+        </label>
+        <label htmlFor="schoolLoc">
+          School Location:
+          <input type={"text"} id="schoolLoc" />
+        </label>
+        <label htmlFor="course">
+          Course Taken:
+          <input type={"text"} id="course" />
+        </label>
+        <label htmlFor="eduStartDate">
+          Start Date:
+          <input type={"text"} id="eduStartDate" />
+        </label>
+        <label htmlFor="eduEndDate">
+          End Date:
+          <input type={"text"} id="eduEndDate" />
+        </label>
+        <button type="submit">Save</button>
+        <button type="button">Cancel</button>
+      </form>
+    );
+  }
+}
+
 class EducationInfo extends Component {
   constructor(props) {
     super(props);
@@ -99,6 +130,7 @@ class EducationInfo extends Component {
           </button>
         )}
         <DisplayEducationInfos infos={this.state.educationInfos} />
+        {this.state.addEduInfo && <EducationForm />}
       </section>
     );
   }
