@@ -19,7 +19,7 @@ section {
 }
 
 section:nth-of-type(1n + 3) {
-  min-height: 250px;
+  min-height: 150px;
 }
 
 section h3 {

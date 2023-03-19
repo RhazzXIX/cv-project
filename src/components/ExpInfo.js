@@ -107,7 +107,7 @@ class ExpInfoForm extends Component {
         </label>
         <label htmlFor="desc1">
           Work description:
-          <input id="desk1" type={"text"} onChange={addWorkDesc1} />
+          <input id="desc1" type={"text"} onChange={addWorkDesc1} />
         </label>
         <label htmlFor="desc2">
           Additional work description:
