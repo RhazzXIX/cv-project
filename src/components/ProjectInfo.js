@@ -23,11 +23,17 @@ class DisplayProject extends Component {
 
   render() {
     const projects = this.props.infos;
+    const deleteProject = this.props.delProj;
     return (
       <ul className="infoList">
         {projects.map((project) => {
           return (
-            <li className="project infoListItem" key={project.id}>
+            <li
+              className="project infoListItem"
+              key={project.id}
+              onMouseOver={this.handleHover}
+              onMouseOut={this.handleMouseOut}
+            >
               <h2>{project.name}</h2>
               <p>{project.toolsUsed}</p>
               <p>
@@ -38,6 +44,15 @@ class DisplayProject extends Component {
                   return <li key={description.id}>{description.text}</li>;
                 })}
               </ul>
+              {this.state.isHovering && (
+                <button
+                  type="button"
+                  onClick={deleteProject}
+                  data-proj={project.id}
+                >
+                  Del
+                </button>
+              )}
             </li>
           );
         })}
@@ -48,23 +63,47 @@ class DisplayProject extends Component {
 
 class ProjectForm extends Component {
   render() {
+    const {
+      addProj,
+      addTools,
+      addStartDate,
+      addEndDate,
+      addProjDesc1,
+      addProjDesc2,
+      addProjDesc3,
+      addProjDesc4,
+      saveProject,
+      cancel,
+    } = this.props;
+
     return (
-      <form className="projForm">
+      <form className="projForm" onSubmit={saveProject}>
         <label htmlFor="projectName">
           Project Name:
-          <input id="projectName" type={"text"} />
+          <input onChange={addProj} id="projectName" type={"text"} />
         </label>
         <label htmlFor="tools">
           Tools Used:
-          <input id="tools" type={"text"} placeholder="React.js, uniqid " />
+          <input
+            onChange={addTools}
+            id="tools"
+            type={"text"}
+            placeholder="React.js, uniqid "
+          />
         </label>
         <label htmlFor="projStart">
           Start Date:
-          <input id="projStart" type={"text"} placeholder="MONTH & YEAR" />
+          <input
+            onChange={addStartDate}
+            id="projStart"
+            type={"text"}
+            placeholder="MONTH & YEAR"
+          />
         </label>
         <label htmlFor="projEnd">
           Finish Date:
           <input
+            onChange={addEndDate}
             id="projEnd"
             type={"text"}
             placeholder={`"Present" if not finished`}
@@ -72,22 +111,24 @@ class ProjectForm extends Component {
         </label>
         <label htmlFor="projDesc1">
           Project description:
-          <input id="projDesc1" type={"text"} />
+          <input onChange={addProjDesc1} id="projDesc1" type={"text"} />
         </label>
         <label htmlFor="projDesc2">
           Additional project description:
-          <input id="projDesc2" type={"text"} />
+          <input onChange={addProjDesc2} id="projDesc2" type={"text"} />
         </label>
         <label htmlFor="projDesc3">
           Additional project description:
-          <input id="projDesc3" type={"text"} />
+          <input onChange={addProjDesc3} id="projDesc3" type={"text"} />
         </label>
         <label htmlFor="projDesc4">
           Additional project description:
-          <input id="projDesc4" type={"text"} />
+          <input onChange={addProjDesc4} id="projDesc4" type={"text"} />
         </label>
         <button type="submit">Save</button>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={cancel}>
+          Cancel
+        </button>
       </form>
     );
   }
@@ -98,7 +139,7 @@ class ProjectInfo extends Component {
     super(props);
     this.state = {
       isHovering: false,
-      addProjInfo: true,
+      addProjInfo: false,
       projects: [
         {
           name: "Gitlytics",
@@ -163,61 +204,73 @@ class ProjectInfo extends Component {
   };
 
   handleProjectNameChange = (e) => {
-    this.state({
+    this.setState({
       name: e.target.value,
     });
   };
 
   handleToolsChange = (e) => {
-    this.state({
+    this.setState({
       toolsUsed: e.target.value,
     });
   };
 
   handleStartDateChange = (e) => {
-    this.state({
+    this.setState({
       startDate: e.target.value,
     });
   };
 
   handleEndDateChange = (e) => {
-    this.state({
+    this.setState({
       endDate: e.target.value,
     });
   };
 
   handleDesc1Change = (e) => {
-    this.state({
-      projDescription1: e.target.value,
+    this.setState({
+      projDescription1: {
+        text: e.target.value,
+        id: uniqid(),
+      },
     });
   };
 
   handleDesc2Change = (e) => {
-    this.state({
-      projDescription2: e.target.value,
+    this.setState({
+      projDescription2: {
+        text: e.target.value,
+        id: uniqid(),
+      },
     });
   };
 
   handleDesc3Change = (e) => {
-    this.state({
-      projDescription3: e.target.value,
+    this.setState({
+      projDescription3: {
+        text: e.target.value,
+        id: uniqid(),
+      },
     });
   };
 
   handleDesc4Change = (e) => {
-    this.state({
-      projDescription4: e.target.value,
+    this.setState({
+      projDescription4: {
+        text: e.target.value,
+        id: uniqid(),
+      },
     });
   };
 
   addProjInfo = (e) => {
-    this.state({
+    this.setState({
       addProjInfo: true,
     });
   };
 
   cancelAddingInfo = (e) => {
-    this.state({
+    this.setState({
       addProjInfo: false,
     });
   };
@@ -281,12 +334,28 @@ class ProjectInfo extends Component {
       >
         <h3 id="proj-head">PROJECTS</h3>
         {this.state.isHovering && (
-          <button className="addInfosBtn" onClick={this.addEduInfo}>
+          <button className="addInfosBtn" onClick={this.addProjInfo}>
             +
           </button>
         )}
-        <DisplayProject infos={this.state.projects} />
-        {this.state.addProjInfo && <ProjectForm />}
+        <DisplayProject
+          infos={this.state.projects}
+          delProj={this.projectDelete}
+        />
+        {this.state.addProjInfo && (
+          <ProjectForm
+            addProj={this.handleProjectNameChange}
+            addTools={this.handleToolsChange}
+            addStartDate={this.handleStartDateChange}
+            addEndDate={this.handleEndDateChange}
+            addProjDesc1={this.handleDesc1Change}
+            addProjDesc2={this.handleDesc2Change}
+            addProjDesc3={this.handleDesc3Change}
+            addProjDesc4={this.handleDesc4Change}
+            saveProject={this.saveProject}
+            cancel={this.cancelAddingInfo}
+          />
+        )}
       </section>
     );
   }
