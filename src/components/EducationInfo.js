@@ -23,6 +23,7 @@ class DisplayEducationInfos extends Component {
 
   render() {
     const EducationInfos = this.props.infos;
+    const deleteInfo = this.props.delInfo;
 
     return (
       <ul>
@@ -39,7 +40,11 @@ class DisplayEducationInfos extends Component {
               <p>
                 {edu.startDate} ~ {edu.endDate}
               </p>
-              {this.state.isHovering && <button data-edu={edu.id}>Del</button>}
+              {this.state.isHovering && (
+                <button data-edu={edu.id} onClick={deleteInfo}>
+                  Del
+                </button>
+              )}
             </li>
           );
         })}
@@ -50,30 +55,42 @@ class DisplayEducationInfos extends Component {
 
 class EducationForm extends Component {
   render() {
+    console.log(this.props);
+    const {
+      addSchool,
+      addLocation,
+      addCourse,
+      addStartDate,
+      addEndDate,
+      saveInfo,
+      cancel,
+    } = this.props;
     return (
-      <form>
+      <form onSubmit={saveInfo}>
         <label htmlFor="schoolName">
           School Name:
-          <input type={"text"} id="schoolName" />
+          <input type={"text"} id="schoolName" onChange={addSchool} />
         </label>
         <label htmlFor="schoolLoc">
           School Location:
-          <input type={"text"} id="schoolLoc" />
+          <input type={"text"} id="schoolLoc" onChange={addLocation} />
         </label>
         <label htmlFor="course">
           Course Taken:
-          <input type={"text"} id="course" />
+          <input type={"text"} id="course" onChange={addCourse} />
         </label>
         <label htmlFor="eduStartDate">
           Start Date:
-          <input type={"text"} id="eduStartDate" />
+          <input type={"text"} id="eduStartDate" onChange={addStartDate} />
         </label>
         <label htmlFor="eduEndDate">
           End Date:
-          <input type={"text"} id="eduEndDate" />
+          <input type={"text"} id="eduEndDate" onChange={addEndDate} />
         </label>
         <button type="submit">Save</button>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={cancel}>
+          Cancel
+        </button>
       </form>
     );
   }
@@ -116,6 +133,79 @@ class EducationInfo extends Component {
     });
   };
 
+  handleSchoolNameChange = (e) => {
+    this.setState({
+      schoolName: e.target.value,
+    });
+  };
+
+  handleLocationChange = (e) => {
+    this.setState({
+      location: e.target.value,
+    });
+  };
+
+  handleCourseChange = (e) => {
+    this.setState({
+      course: e.target.value,
+    });
+  };
+
+  handleStartDateChange = (e) => {
+    this.setState({
+      startDate: e.target.value,
+    });
+  };
+
+  handleEndDateChange = (e) => {
+    this.setState({
+      endDate: e.target.value,
+    });
+  };
+
+  addEduInfo = (e) => {
+    this.setState({
+      addEduInfo: true,
+    });
+  };
+
+  cancelAddInfo = (e) => {
+    this.setState({
+      addEduInfo: false,
+    });
+  };
+
+  saveEduInfo = (e) => {
+    e.preventDefault();
+    const education = {
+      schoolName: this.state.schoolName,
+      location: this.state.location,
+      course: this.state.course,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      id: this.state.id,
+    };
+
+    this.setState({
+      addEduInfo: false,
+      educationInfos: this.state.educationInfos.concat(education),
+      schoolName: "",
+      location: "",
+      course: "",
+      startDate: "",
+      endDate: "",
+      id: uniqid(),
+    });
+  };
+
+  deleteEduInfo = (e) => {
+    this.setState({
+      educationInfos: this.state.educationInfos.filter((info) => {
+        return info.id !== e.target.dataset.edu;
+      }),
+    });
+  };
+
   render() {
     return (
       <section
@@ -129,8 +219,21 @@ class EducationInfo extends Component {
             +
           </button>
         )}
-        <DisplayEducationInfos infos={this.state.educationInfos} />
-        {this.state.addEduInfo && <EducationForm />}
+        <DisplayEducationInfos
+          infos={this.state.educationInfos}
+          delInfo={this.deleteEduInfo}
+        />
+        {this.state.addEduInfo && (
+          <EducationForm
+            saveInfo={this.saveEduInfo}
+            addSchool={this.handleSchoolNameChange}
+            addLocation={this.handleLocationChange}
+            addCourse={this.handleCourseChange}
+            addStartDate={this.handleStartDateChange}
+            addEndDate={this.handleEndDateChange}
+            cancel={this.cancelAddInfo}
+          />
+        )}
       </section>
     );
   }
