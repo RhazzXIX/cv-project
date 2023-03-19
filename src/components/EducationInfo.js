@@ -1,5 +1,6 @@
 import { Component } from "react";
 import uniqid from "uniqid";
+import "../styles/EducationInfo.css";
 
 class DisplayEducationInfos extends Component {
   constructor(props) {
@@ -26,10 +27,11 @@ class DisplayEducationInfos extends Component {
     const deleteInfo = this.props.delInfo;
 
     return (
-      <ul>
+      <ul className="infoList">
         {EducationInfos.map((edu) => {
           return (
             <li
+              className="education infoListItem"
               key={edu.id}
               onMouseOver={this.handleHover}
               onMouseOut={this.handleMouseOut}
@@ -65,7 +67,7 @@ class EducationForm extends Component {
       cancel,
     } = this.props;
     return (
-      <form onSubmit={saveInfo}>
+      <form className="eduForm" onSubmit={saveInfo}>
         <label htmlFor="schoolName">
           School Name:
           <input type={"text"} id="schoolName" onChange={addSchool} />

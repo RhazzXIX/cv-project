@@ -26,11 +26,11 @@ class ExpInfoDisplay extends Component {
     const experiences = this.props.experiences;
     const deleteExp = this.props.deleteExp;
     return (
-      <ul className="experienceList">
+      <ul className="infoList">
         {experiences.map((experience) => {
           return (
             <li
-              className="experience"
+              className="experience infoListItem"
               key={experience.experienceID}
               onMouseOver={this.handleHover}
               onMouseOut={this.handleMouseOut}

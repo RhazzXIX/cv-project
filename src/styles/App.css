@@ -15,9 +15,10 @@ section {
   position: relative;
   max-width: 910px;
   margin: auto;
+  margin-bottom: 8px;
 }
 
-section:nth-of-type(1n + 2) {
+section:nth-of-type(1n + 3) {
   min-height: 250px;
 }
 
@@ -42,4 +43,18 @@ button.addInfosBtn {
   right: 20px;
   padding: 4px 8px;
   border-radius: 100%;
+}
+
+ul.infoList {
+  list-style: none;
+}
+
+li.infoListItem {
+  margin: 6px 0;
+  padding: 0 8px;
+  gap: 2px;
+}
+
+li.infoListItem p {
+  font-size: 1.2rem;
 }

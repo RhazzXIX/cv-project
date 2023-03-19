@@ -1,21 +1,11 @@
-ul.experienceList {
-  list-style: none;
-}
-
 li.experience {
   position: relative;
   display: grid;
   grid-template-rows: repeat(3, auto);
   grid-template-columns: repeat(2, auto);
   align-items: center;
-  margin: 6px 0;
-  padding: 0 8px;
-  gap: 2px;
 }
 
-li.experience p {
-  font-size: 1.2rem;
-}
 
 li.experience p:nth-of-type(2n + 1) {
   justify-self: end;
