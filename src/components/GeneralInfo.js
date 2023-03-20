@@ -1,5 +1,4 @@
 import { Component } from "react";
-import uniqid from "uniqid";
 import "../styles/GeneralInfo.css";
 
 class GeneralInfo extends Component {
