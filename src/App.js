@@ -6,11 +6,13 @@ import "./styles/App.css";
 import EducationInfo from "./components/EducationInfo";
 import ProjectInfo from "./components/ProjectInfo";
 import TechSkillsInfo from "./components/TechSkillsInfo";
+import Instruction from "./components/Instruction";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      instructionIsShown: true,
       editGenInfo: false,
       name: "Driven Person",
       address: "Competence Kingdom, Up-skilling World",
@@ -73,6 +75,14 @@ class App extends Component {
     });
   };
 
+  removeInstruction = (e) => {
+    if (e.target.dataset.remove === 'yes') {
+      this.setState({
+        instructionIsShown: false
+      })
+    }
+  }
+
   render() {
     let genInfo = (
       <GeneralInfo infos={this.state} editInfos={this.editGeneralInfo} />
@@ -91,12 +101,13 @@ class App extends Component {
         />
       );
     return (
-      <main>
+      <main id="App">
         <section id="general-info">{genInfo}</section>
         <EducationInfo />
         <ExpInfo />
         <ProjectInfo />
         <TechSkillsInfo />
+        {this.state.instructionIsShown && <Instruction remove={this.removeInstruction} />}
       </main>
     );
   }
