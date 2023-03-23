@@ -167,13 +167,8 @@ const ExpInfo = (props) => {
     text: "",
     key: uniqid(),
   });
-  const [experienceID, setExpID] = useState(uniqid());
 
-  const handleTitleChange = (e) => {
-    this.setState({
-      title: e.target.value,
-    });
-  };
+  const handleTitleChange = (e) => setTitle(e.target.value);
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
@@ -208,6 +203,7 @@ const ExpInfo = (props) => {
   };
 
   const resetState = () => {
+    setTitle("");
     setStartDate("");
     setEndDate("");
     setCompanyName("");
@@ -224,6 +220,7 @@ const ExpInfo = (props) => {
       text: "",
       id: uniqid(),
     });
+    setAddInfo(false);
   };
 
   const handleSaveExperience = (e) => {
@@ -235,7 +232,7 @@ const ExpInfo = (props) => {
       companyName,
       workLocation,
       workSummary: [workDescription1, workDescription2, workDescription3],
-      experienceID,
+      experienceID: uniqid(),
     };
 
     setExperiences(experiences.concat(experience));
