@@ -8,6 +8,18 @@ li.skills h2 {
   margin-right: 8px;
 }
 
+li.skills p {
+  grid-row: 1 / -1;
+  grid-column: 2 / 3;
+  justify-self: start;
+}
+
+li.skills > button {
+  grid-row: 1 / -1;
+  grid-column: 2 / 3;
+  justify-self: end;
+}
+
 form.skillForm {
   display: grid;
   grid-template-rows: repeat(3, 38px);
