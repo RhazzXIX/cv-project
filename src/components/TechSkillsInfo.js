@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState } from "react";
 import uniqid from "uniqid";
 import "../styles/TechSkillsInfo.css";
 
@@ -33,159 +33,122 @@ const SkillsForm = (props) => {
   );
 };
 
-class DisplaySkills extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isHovering: false,
-    };
-  }
+const DisplaySkills = (props) => {
+  const [isHovering, setHovering] = useState(false);
 
-  handleHover = (e) => {
-    this.setState({
-      isHovering: true,
-    });
+  const handleHover = (e) => {
+    setHovering(true);
   };
 
-  handleMouseOut = (e) => {
-    this.setState({
-      isHovering: false,
-    });
+  const handleMouseOut = (e) => {
+    setHovering(false);
   };
 
-  render() {
-    const techs = this.props.techs;
-    const delSkill = this.props.delSkill;
-    return (
-      <ul className="infoList">
-        {techs.map((tech) => {
-          return (
-            <li
-              className="skills infoListItem"
-              key={tech.id}
-              onMouseOver={this.handleHover}
-              onMouseOut={this.handleMouseOut}
-            >
-              <h2>{tech.skill}:</h2>
-              <p>{tech.tools}</p>
-              {this.state.isHovering && (
-                <button type="button" onClick={delSkill} data-skill={tech.id}>
-                  Del
-                </button>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
-}
+  const techs = props.techs;
+  const delSkill = props.delSkill;
 
-class TechSkillsInfo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isHovering: false,
-      addSkill: false,
-      techs: [
-        {
-          skill: "Languages",
-          tools: "HTML/CSS, Javascript",
-          id: uniqid(),
-        },
-      ],
-      skill: "",
-      tools: "",
+  return (
+    <ul className="infoList">
+      {techs.map((tech) => {
+        return (
+          <li
+            className="skills infoListItem"
+            key={tech.id}
+            onMouseOver={handleHover}
+            onMouseOut={handleMouseOut}
+          >
+            <h2>{tech.skill}:</h2>
+            <p>{tech.tools}</p>
+            {isHovering && (
+              <button type="button" onClick={delSkill} data-skill={tech.id}>
+                Del
+              </button>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
+
+const TechSkillsInfo = () => {
+  const [isHovering, setHovering] = useState(false);
+
+  const handleHover = (e) => {
+    setHovering(true);
+  };
+
+  const handleMouseOut = (e) => {
+    setHovering(false);
+  };
+
+  const [addSkill, setAddSkill] = useState(false);
+  const [techs, setTechs] = useState([
+    {
+      skill: "Languages",
+      tools: "HTML/CSS, Javascript",
       id: uniqid(),
-    };
-  }
+    },
+  ]);
+  const [skill, setSkill] = useState("");
+  const [tools, setTools] = useState("");
 
-  handleSkillChange = (e) => {
-    this.setState({
-      skill: e.target.value,
-    });
+  const handleSkillChange = (e) => setSkill(e.target.value);
+
+  const handleToolChange = (e) => setTools(e.target.value);
+
+  const resetState = () => {
+    setSkill("");
+    setTools("");
+    setAddSkill(false);
   };
 
-  handleToolChange = (e) => {
-    this.setState({
-      tools: e.target.value,
-    });
-  };
-
-  saveSkill = (e) => {
+  const saveSkill = (e) => {
     e.preventDefault();
     const tech = {
-      skill: this.state.skill,
-      tools: this.state.tools,
-      id: this.state.id,
+      skill,
+      tools,
+      id: uniqid(),
     };
 
-    this.setState({
-      addSkill: false,
-      techs: this.state.techs.concat(tech),
-      skill: "",
-      tools: "",
-      id: uniqid(),
-    });
+    setTechs(techs.concat(tech));
+    resetState();
   };
 
-  cancelAddSkill = (e) => {
-    this.setState({
-      addSkill: false,
-    });
-  };
+  const cancelAddSkill = (e) => setAddSkill(false);
 
-  addSkillInfo = (e) => {
-    this.setState({
-      addSkill: true,
-    });
-  };
+  const addSkillInfo = (e) => setAddSkill(true);
 
-  handleHover = (e) => {
-    this.setState({
-      isHovering: true,
-    });
-  };
-
-  handleMouseOut = (e) => {
-    this.setState({
-      isHovering: false,
-    });
-  };
-
-  deleteSkill = (e) => {
-    this.setState({
-      techs: this.state.techs.filter((skill) => {
+  const deleteSkill = (e) =>
+    setTechs(
+      techs.filter((skill) => {
         return skill.id !== e.target.dataset.skill;
-      }),
-    });
-  };
-
-  render() {
-    return (
-      <section
-        id="skillsInfo"
-        onMouseOver={this.handleHover}
-        onMouseOut={this.handleMouseOut}
-      >
-        <h3 id="skills-head">TECHNICAL SKILLS</h3>
-        {this.state.isHovering && (
-          <button className="addInfosBtn" onClick={this.addSkillInfo}>
-            +
-          </button>
-        )}
-        <DisplaySkills techs={this.state.techs} delSkill={this.deleteSkill} />
-        {this.state.addSkill && (
-          <SkillsForm
-            addSkill={this.handleSkillChange}
-            addTools={this.handleToolChange}
-            saveSkill={this.saveSkill}
-            cancel={this.cancelAddSkill}
-          />
-        )}
-      </section>
+      })
     );
-  }
-}
+
+  return (
+    <section
+      id="skillsInfo"
+      onMouseOver={handleHover}
+      onMouseOut={handleMouseOut}
+    >
+      <h3 id="skills-head">TECHNICAL SKILLS</h3>
+      {isHovering && (
+        <button className="addInfosBtn" onClick={addSkillInfo}>
+          +
+        </button>
+      )}
+      <DisplaySkills techs={techs} delSkill={deleteSkill} />
+      {addSkill && (
+        <SkillsForm
+          addSkill={handleSkillChange}
+          addTools={handleToolChange}
+          saveSkill={saveSkill}
+          cancel={cancelAddSkill}
+        />
+      )}
+    </section>
+  );
+};
 
 export default TechSkillsInfo;
