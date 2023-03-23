@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState } from "react";
 import GeneralInfo from "./components/GeneralInfo";
 import GeneralInfoForm from "./components/GeneralInfoForm";
 import ExpInfo from "./components/ExpInfo";
@@ -8,109 +8,84 @@ import ProjectInfo from "./components/ProjectInfo";
 import TechSkillsInfo from "./components/TechSkillsInfo";
 import Instruction from "./components/Instruction";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      instructionIsShown: true,
-      editGenInfo: false,
-      name: "Driven Person",
-      address: "Competence Kingdom, Up-skilling World",
-      contactNum: "195-555-0375",
-      email: "example@email.com",
-      gitHub: "github.com/user",
-      linkedIn: "linkedin.com/user",
-    };
-  }
+const App = () => {
+  const [instructionIsShown, setInstruction] = useState(true);
+  const [editGenInfo, setGenInfo] = useState(false);
+  const [name, setName] = useState("Jake Ryan");
+  const [address, setAddress] = useState("Georgetown, TX");
+  const [contactNum, setContactNum] = useState("123-456-7890");
+  const [email, setEmail] = useState("email@example.com");
+  const [gitHub, setGitHub] = useState("github.com/user");
+  const [linkedIn, setLinkedIn] = useState("linkedin.com/user");
 
-  submitGeneralEdit = (e) => {
+  const submitGeneralEdit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    this.setState({
-      editGenInfo: false,
-    });
+    setGenInfo(false);
   };
 
-  handleChangeName = (e) => {
+  const handleChangeName = (e) => {
     e.stopPropagation();
-    this.setState({
-      name: e.target.value,
-    });
+    setName(e.target.value);
   };
 
-  handleChangeAdd = (e) => {
-    this.setState({
-      address: e.target.value,
-    });
+  const handleChangeAdd = (e) => {
+    setAddress();
   };
 
-  handleChangeNumber = (e) => {
-    this.setState({
-      contactNum: e.target.value,
-    });
+  const handleChangeNumber = (e) => {
+    setContactNum(e.target.value);
   };
 
-  handleChangeEmail = (e) => {
-    this.setState({
-      email: e.target.value,
-    });
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
   };
 
-  handleChangeGitHUb = (e) => {
-    this.setState({
-      gitHub: e.target.value,
-    });
+  const handleChangeGitHUb = (e) => {
+    setGitHub(e.target.value);
   };
 
-  handleChangeLinkedIn = (e) => {
-    this.setState({
-      linkedIn: e.target.value,
-    });
+  const handleChangeLinkedIn = (e) => {
+    setLinkedIn(e.target.value);
   };
 
-  editGeneralInfo = (e) => {
+  const editGeneralInfo = (e) => {
     e.stopPropagation();
-    this.setState({
-      editGenInfo: true,
-    });
+    setGenInfo(true);
   };
 
-  removeInstruction = (e) => {
-    if (e.target.dataset.remove === 'yes') {
-      this.setState({
-        instructionIsShown: false
-      })
+  const removeInstruction = (e) => {
+    if (e.target.dataset.remove === "yes") {
+      setInstruction(false);
     }
-  }
+  };
 
-  render() {
-    let genInfo = (
-      <GeneralInfo infos={this.state} editInfos={this.editGeneralInfo} />
+  const userInfo = { name, address, contactNum, email, gitHub, linkedIn };
+
+  let genInfo = <GeneralInfo infos={userInfo} editInfos={editGeneralInfo} />;
+  if (editGenInfo)
+    genInfo = (
+      <GeneralInfoForm
+        infos={userInfo}
+        save={submitGeneralEdit}
+        editName={handleChangeName}
+        editAddress={handleChangeAdd}
+        editNumber={handleChangeNumber}
+        editEmail={handleChangeEmail}
+        editGitHub={handleChangeGitHUb}
+        editLinkedIn={handleChangeLinkedIn}
+      />
     );
-    if (this.state.editGenInfo)
-      genInfo = (
-        <GeneralInfoForm
-          infos={this.state}
-          save={this.submitGeneralEdit}
-          editName={this.handleChangeName}
-          editAddress={this.handleChangeAdd}
-          editNumber={this.handleChangeNumber}
-          editEmail={this.handleChangeEmail}
-          editGitHub={this.handleChangeGitHUb}
-          editLinkedIn={this.handleChangeLinkedIn}
-        />
-      );
-    return (
-      <main id="App">
-        <section id="general-info">{genInfo}</section>
-        <EducationInfo />
-        <ExpInfo />
-        <ProjectInfo />
-        <TechSkillsInfo />
-        {this.state.instructionIsShown && <Instruction remove={this.removeInstruction} />}
-      </main>
-    );
-  }
-}
+  return (
+    <main id="App">
+      <section id="general-info">{genInfo}</section>
+      <EducationInfo />
+      <ExpInfo />
+      <ProjectInfo />
+      <TechSkillsInfo />
+      {instructionIsShown && <Instruction remove={removeInstruction} />}
+    </main>
+  );
+};
 
 export default App;
